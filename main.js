@@ -12,6 +12,9 @@ let menusButton = document.querySelectorAll(".menus button");
 // 검색버튼 클릭 이벤트 주기
 let searchButton = document.querySelector("#search-button");
 
+// 엔터를 클릭했을때 검색 이벤트 작동하기
+let searchEnter = document.querySelector("#search-input");
+
 // 입력한 키워드값을 가져오기 위해 input.values를 가져온다
 
 
@@ -107,6 +110,21 @@ const getNewsByKeyword = async() => {
     url = new URL(`https://api.newscatcherapi.com/v2/search?q=${keyword}&page_size=1`);
 
     getNews();
+}
+
+const getNewsByEnter = async() => {
+
+    // 엔터키를 텍스트창 input에서 작동했을때 조회하는 로직
+
+    if(window.event.keyCode == 13){
+        let keyword = document.querySelector("#search-input").value;
+
+        // search Url을 생성하고 입력한 keyword값을 넣어준다.
+        url = new URL(`https://api.newscatcherapi.com/v2/search?q=${keyword}&page_size=1`);
+
+        getNews();
+    }
+
 }
 
 
@@ -231,4 +249,6 @@ const moveToPage = (pageNum) => {
 
 
 searchButton.addEventListener("click", getNewsByKeyword);
+searchEnter.addEventListener("keyup", getNewsByEnter);
+
 getLatestNews();
